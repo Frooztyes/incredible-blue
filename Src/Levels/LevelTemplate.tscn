@@ -77,7 +77,7 @@ position = Vector2( 31, 38 )
 stomp_impulse = 250.0
 
 [node name="AnimatedSprite" parent="Player" index="0"]
-frame = 1
+frame = 2
 
 [node name="Camera2D" parent="Player" index="2"]
 limit_right = 2653
@@ -94,7 +94,6 @@ next_scene = ExtResource( 5 )
 
 [node name="AnimatedSprite" parent="Portal2D" index="0"]
 scale = Vector2( 5, 5 )
-frame = 4
 
 [node name="CollisionShape2D" parent="Portal2D" index="1"]
 scale = Vector2( 5, 5 )

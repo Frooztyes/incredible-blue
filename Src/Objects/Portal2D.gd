@@ -5,6 +5,8 @@ export var next_scene: PackedScene
 onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 func _on_body_entered(body: PhysicsBody2D) -> void:
+	body.get_node('AnimationPlayer').play("in_portal")
+	yield(body.get_node('AnimationPlayer'), "animation_finished")
 	teleport()
 	
 func _get_configuration_warning() -> String:

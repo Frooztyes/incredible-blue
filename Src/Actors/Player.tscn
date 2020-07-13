@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Src/Actors/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/Player/Idle-v2/player-idle-v2-2.png" type="Texture" id=2]
@@ -43,8 +43,63 @@ extents = Vector2( 14, 28 )
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 16, 32 )
 
+[sub_resource type="Animation" id=4]
+resource_name = "appear_portal"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.965935, 1 ),
+"update": 0,
+"values": [ 720.0, -720.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.659754, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "in_portal"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.965935, 1 ),
+"update": 0,
+"values": [ -720.0, 720.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.659754, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0, 0 ) ]
+}
+
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 0, -2 )
+rotation = 6.28319
 collision_mask = 10
 script = ExtResource( 1 )
 speed = Vector2( 300, 500 )
@@ -53,9 +108,10 @@ stomp_impulse = 500.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -30 )
+rotation = -12.5664
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -86,5 +142,9 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnnemyDetector"]
 position = Vector2( 0, -37 )
 shape = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/appear_portal = SubResource( 4 )
+anims/in_portal = SubResource( 5 )
 [connection signal="area_entered" from="EnnemyDetector" to="." method="_on_EnnemyDetector_area_entered"]
 [connection signal="body_entered" from="EnnemyDetector" to="." method="_on_EnnemyDetector_body_entered"]

@@ -83,7 +83,6 @@ collision_layer = 4
 script = ExtResource( 2 )
 
 [node name="coin" type="Sprite" parent="."]
-position = Vector2( 0, 4 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -97,4 +96,6 @@ anims/fade_out = SubResource( 3 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
+volume_db = -15.0
+pitch_scale = 1.9
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

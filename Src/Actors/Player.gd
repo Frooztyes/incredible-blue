@@ -2,28 +2,36 @@ extends Actor
 
 export var stomp_impulse: = 1000.0
 
+var can_start: bool = false
+
 func _on_EnnemyDetector_area_entered(area: Area2D) -> void:
 	_velocity = calculate_stomp_velocity(_velocity, stomp_impulse)
 	
 func _on_EnnemyDetector_body_entered(body: PhysicsBody2D) -> void:
 	queue_free()
 	
-func _physics_process(delta: float) -> void:
-	var is_jump_interrupted: = Input.is_action_just_released("jump") and _velocity.y < 0.0
-	var direction: = get_direction()
+func _ready() -> void:
+	get_node("AnimationPlayer").play("appear_portal")
+	yield(get_node("AnimationPlayer"), "animation_finished")
+	can_start = true
 	
-	if direction.x == 0.0:
-		get_node("AnimatedSprite").play("idle")
-	else:
-		get_node("AnimatedSprite").play("walk")
-		if direction.x == -1.0:
-			get_node("AnimatedSprite").set_flip_h(true)
-		else:
-			get_node("AnimatedSprite").set_flip_h(false)
-			
+func _physics_process(delta: float) -> void:
+	if can_start:
+		var is_jump_interrupted: = Input.is_action_just_released("jump") and _velocity.y < 0.0
+		var direction: = get_direction()
 		
-	_velocity  = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
-	_velocity = move_and_slide(_velocity, FLOOR_NORMAL)
+		if direction.x == 0.0:
+			get_node("AnimatedSprite").play("idle")
+		else:
+			get_node("AnimatedSprite").play("walk")
+			if direction.x == -1.0:
+				get_node("AnimatedSprite").set_flip_h(true)
+			else:
+				get_node("AnimatedSprite").set_flip_h(false)
+				
+			
+		_velocity  = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
+		_velocity = move_and_slide(_velocity, FLOOR_NORMAL)
 	
 func get_direction() -> Vector2:
 	return Vector2(
