@@ -1,0 +1,32 @@
+[gd_scene format=2]
+
+[node name="ColorRect" type="ColorRect"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -212.0
+margin_top = -133.0
+margin_right = 250.0
+margin_bottom = -24.0
+color = Color( 0.113725, 0.109804, 0.109804, 0.352941 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Informations" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -217.0
+margin_top = -97.0
+margin_right = 224.0
+margin_bottom = -8.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "BlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablablaBlablabla"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

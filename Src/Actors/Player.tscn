@@ -41,12 +41,12 @@ animations = [ {
 extents = Vector2( 14, 28 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 16, 32 )
+extents = Vector2( 16, 28.109 )
 
 [sub_resource type="Animation" id=4]
 resource_name = "appear_portal"
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/0/path = NodePath("../Player/AnimatedSprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -58,7 +58,7 @@ tracks/0/keys = {
 "values": [ 720.0, -720.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimatedSprite:scale")
+tracks/1/path = NodePath("../Player/AnimatedSprite:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -73,7 +73,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=5]
 resource_name = "in_portal"
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/0/path = NodePath("../Player/AnimatedSprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -85,7 +85,7 @@ tracks/0/keys = {
 "values": [ -720.0, 720.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AnimatedSprite:scale")
+tracks/1/path = NodePath("../Player/AnimatedSprite:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -96,10 +96,22 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 0, 0 ) ]
 }
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "stop_movement"
+} ]
+}
 
 [node name="Player" type="KinematicBody2D"]
-position = Vector2( 0, -2 )
-rotation = 6.28319
 collision_mask = 10
 script = ExtResource( 1 )
 speed = Vector2( 300, 500 )
@@ -107,31 +119,28 @@ gravity = 1200.0
 stomp_impulse = 500.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -30 )
 rotation = -12.5664
 frames = SubResource( 1 )
 animation = "idle"
-frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 0.498039, 0.992157, 0, 1 )
 light_mask = -2147483647
-position = Vector2( 0, -33 )
 shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 0, -168 )
 current = true
-limit_left = 0
-limit_bottom = 0
 limit_smoothed = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 smoothing_enabled = true
 smoothing_speed = 7.0
-drag_margin_left = 0.0
-drag_margin_right = 0.0
+drag_margin_left = 0.03
+drag_margin_top = 0.31
+drag_margin_right = 0.03
+drag_margin_bottom = 0.31
+editor_draw_drag_margin = true
 
 [node name="EnnemyDetector" type="Area2D" parent="."]
 modulate = Color( 0.945098, 0.352941, 0.686275, 1 )
@@ -140,11 +149,13 @@ collision_layer = 2147483648
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnnemyDetector"]
-position = Vector2( 0, -37 )
 shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/appear_portal = SubResource( 4 )
 anims/in_portal = SubResource( 5 )
+
+[node name="TimerArrow" type="Timer" parent="."]
 [connection signal="area_entered" from="EnnemyDetector" to="." method="_on_EnnemyDetector_area_entered"]
 [connection signal="body_entered" from="EnnemyDetector" to="." method="_on_EnnemyDetector_body_entered"]
+[connection signal="timeout" from="TimerArrow" to="." method="_on_TimerArrow_timeout"]

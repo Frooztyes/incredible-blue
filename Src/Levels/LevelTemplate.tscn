@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Src/Levels/Tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://Src/Objects/Coin.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Src/Actors/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Src/Objects/Portal2D.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Src/Levels/Level01.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Dobby.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/Background/forest.png" type="Texture" id=16]
 [ext_resource path="res://assets/wood/apple.png" type="Texture" id=23]
 
@@ -36,9 +37,9 @@ layer = -100
 [node name="background" type="TextureRect" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -1.0
+margin_left = -1.26483
 margin_top = -175.0
-margin_right = 1567.0
+margin_right = 1566.74
 margin_bottom = 393.0
 texture = ExtResource( 16 )
 __meta__ = {
@@ -77,7 +78,7 @@ position = Vector2( 31, 38 )
 stomp_impulse = 250.0
 
 [node name="AnimatedSprite" parent="Player" index="0"]
-frame = 2
+frame = 4
 
 [node name="Camera2D" parent="Player" index="2"]
 limit_right = 2653
@@ -94,9 +95,14 @@ next_scene = ExtResource( 5 )
 
 [node name="AnimatedSprite" parent="Portal2D" index="0"]
 scale = Vector2( 5, 5 )
+frame = 2
 
 [node name="CollisionShape2D" parent="Portal2D" index="1"]
 scale = Vector2( 5, 5 )
+
+[node name="Dobby" parent="." instance=ExtResource( 6 )]
+visible = false
+position = Vector2( 163.934, 27.0752 )
 
 [editable path="Player"]
 

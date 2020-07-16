@@ -1,0 +1,228 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Src/UserInterface/Title.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Src/Screens/OptionScreen.gd" type="Script" id=2]
+[ext_resource path="res://assets/Background/forest.png" type="Texture" id=4]
+[ext_resource path="res://assets/Theme/ui_theme.tres" type="Theme" id=5]
+
+[node name="OptionsScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 5 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" parent="." instance=ExtResource( 1 )]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -206.0
+margin_top = -236.0
+margin_right = 206.0
+margin_bottom = -180.0
+text = "Options"
+
+[node name="Menu" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.5
+margin_top = -95.0
+margin_right = 200.5
+margin_bottom = 181.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Window" type="HBoxContainer" parent="Menu"]
+margin_right = 401.0
+margin_bottom = 46.0
+size_flags_vertical = 3
+
+[node name="Text" type="Label" parent="Menu/Window"]
+margin_right = 74.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+text = "Window :"
+valign = 1
+
+[node name="WindowDropdown" type="OptionButton" parent="Menu/Window"]
+margin_left = 78.0
+margin_top = 10.0
+margin_right = 401.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+align = 1
+
+[node name="Resolution" type="HBoxContainer" parent="Menu"]
+margin_top = 50.0
+margin_right = 401.0
+margin_bottom = 96.0
+size_flags_vertical = 3
+
+[node name="Text" type="Label" parent="Menu/Resolution"]
+margin_right = 91.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+text = "Resolution : "
+valign = 1
+
+[node name="ResolutionDropdown" type="OptionButton" parent="Menu/Resolution"]
+margin_left = 95.0
+margin_top = 10.0
+margin_right = 401.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+align = 1
+
+[node name="Master" type="HBoxContainer" parent="Menu"]
+margin_top = 100.0
+margin_right = 401.0
+margin_bottom = 146.0
+size_flags_vertical = 3
+
+[node name="Text" type="Label" parent="Menu/Master"]
+margin_right = 95.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+text = "Master :"
+valign = 1
+
+[node name="HSlider" type="HSlider" parent="Menu/Master"]
+margin_left = 99.0
+margin_right = 337.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = -24.0
+max_value = 0.0
+
+[node name="Value" type="Label" parent="Menu/Master"]
+margin_left = 341.0
+margin_right = 401.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+text = "100"
+align = 1
+valign = 1
+
+[node name="Music" type="HBoxContainer" parent="Menu"]
+margin_top = 150.0
+margin_right = 401.0
+margin_bottom = 196.0
+size_flags_vertical = 3
+
+[node name="Text" type="Label" parent="Menu/Music"]
+margin_right = 95.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+text = "Music :"
+valign = 1
+
+[node name="HSlider" type="HSlider" parent="Menu/Music"]
+margin_left = 99.0
+margin_right = 337.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = -24.0
+max_value = 0.0
+
+[node name="Value" type="Label" parent="Menu/Music"]
+margin_left = 341.0
+margin_right = 401.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+text = "100"
+align = 1
+valign = 1
+
+[node name="Sound" type="HBoxContainer" parent="Menu"]
+margin_top = 200.0
+margin_right = 401.0
+margin_bottom = 246.0
+size_flags_vertical = 3
+
+[node name="Text" type="Label" parent="Menu/Sound"]
+margin_right = 95.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+text = "Sound :"
+valign = 1
+
+[node name="HSlider" type="HSlider" parent="Menu/Sound"]
+margin_left = 99.0
+margin_right = 337.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = -24.0
+max_value = 0.0
+
+[node name="Value" type="Label" parent="Menu/Sound"]
+margin_left = 341.0
+margin_right = 401.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+text = "100"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu"]
+margin_top = 250.0
+margin_right = 401.0
+margin_bottom = 276.0
+size_flags_horizontal = 3
+
+[node name="Cancel" type="Button" parent="Menu/HBoxContainer"]
+margin_right = 190.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Cancel changes"
+
+[node name="Save" type="Button" parent="Menu/HBoxContainer"]
+margin_left = 194.0
+margin_right = 401.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save and return to menu"
+[connection signal="item_selected" from="Menu/Window/WindowDropdown" to="." method="_on_Window_item_selected"]
+[connection signal="item_selected" from="Menu/Resolution/ResolutionDropdown" to="." method="_on_ResolutionDropdown_item_selected"]
+[connection signal="value_changed" from="Menu/Master/HSlider" to="." method="_on_master_value_changed"]
+[connection signal="value_changed" from="Menu/Music/HSlider" to="." method="_on_music_value_changed"]
+[connection signal="value_changed" from="Menu/Sound/HSlider" to="." method="_on_sound_value_changed"]
+[connection signal="pressed" from="Menu/HBoxContainer/Cancel" to="." method="cancel"]
+[connection signal="pressed" from="Menu/HBoxContainer/Save" to="." method="save"]

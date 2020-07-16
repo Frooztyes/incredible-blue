@@ -4,8 +4,10 @@ var actual_flip: = false
 
 var in_collision: = false
 
-onready var projectile = preload("res://Src/Projectile/Bubble.tscn").instance()
+#onready var projectile = preload("res://Src/Projectile/Bubble.tscn").instance()
 onready var animation_player = $AnimationPlayer
+
+export var score: = 100
 
 var time_start = 0
 var time_now = 0
@@ -24,7 +26,7 @@ func _on_StompDetector_body_entered(body: PhysicsBody2D) -> void:
 		$StompDetector.queue_free()
 		$CollisionShape2D.queue_free()
 		in_collision = true
-		animation_player.play("stomped")
+		die()
 	
 func _physics_process(delta: float) -> void:
 	if !in_collision :
@@ -35,16 +37,14 @@ func _physics_process(delta: float) -> void:
 			_velocity.x *= -1.0
 		_velocity.y = move_and_slide(_velocity, FLOOR_NORMAL).y
 	else:
-		add_child(projectile)
-		print(get_running_time())
-	
+#		add_child(projectile)
+		pass
 
-#func _on_DetectionZone_body_entered(body: PhysicsBody2D) -> void:
-#	in_collision = true
-#
-#
-#func _on_DetectionZone_body_exited(body: Node) -> void:
-#	in_collision = false
+func die() -> void:
+	PlayerData.level_score += score
+	animation_player.play("stomped")
+	yield(animation_player, "animation_finished")
+	queue_free()
 	
 func get_running_time() -> int:
 	return OS.get_unix_time() - time_start
