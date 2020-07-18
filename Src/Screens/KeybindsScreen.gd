@@ -1,8 +1,8 @@
 extends Control
 
 onready var buttoncontrainer= get_node("Menu/VBoxContainer")
-onready var buttonscript = load("res://Src/Screens/KeyButton.gd")
-onready var back_scene = "res://Src/Screens/MainScreen.tscn"
+onready var buttonscript = load("res://src/Screens/KeyButton.gd")
+onready var back_scene = "res://src/Screens/MainScreen.tscn"
 
 var keybinds
 var buttons = {}

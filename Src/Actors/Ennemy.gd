@@ -1,10 +1,10 @@
-extends "res://Src/Actors/Actor.gd"
+extends "res://src/Actors/Actor.gd"
 
 var actual_flip: = false
 
 var in_collision: = false
 
-#onready var projectile = preload("res://Src/Projectile/Bubble.tscn").instance()
+#onready var projectile = preload("res://src/Projectile/Bubble.tscn").instance()
 onready var animation_player = $AnimationPlayer
 
 export var score: = 100

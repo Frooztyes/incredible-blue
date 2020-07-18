@@ -1,13 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/healthbar/healthbar-back.png" type="Texture" id=1]
-[ext_resource path="res://assets/healthbar/healthbar-over.png" type="Texture" id=2]
-[ext_resource path="res://assets/healthbar/healthbar-progress.png" type="Texture" id=3]
+[ext_resource path="res://assets/misc/healthbar/healthbar-back.png" type="Texture" id=1]
+[ext_resource path="res://assets/misc/healthbar/healthbar-over.png" type="Texture" id=2]
+[ext_resource path="res://assets/misc/healthbar/healthbar-progress.png" type="Texture" id=3]
 [ext_resource path="res://Src/UserInterface/HealthBar.gd" type="Script" id=4]
+[ext_resource path="res://assets/Theme/ui_theme.tres" type="Theme" id=5]
+[ext_resource path="res://assets/Fonts/BatlagorUI.tres" type="DynamicFont" id=6]
+
 
 [node name="HealthBar" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -1.0
+margin_top = -7.0
+margin_right = -1.0
+margin_bottom = -7.0
+theme = ExtResource( 5 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -41,6 +49,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="HealthDisplay" type="Label" parent="HealthOver"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -137.0
+margin_top = -50.0
+margin_right = 137.0
+margin_bottom = 50.0
+size_flags_vertical = 5
+custom_fonts/font = ExtResource( 6 )
+text = "%s / %s"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="UpdateTween" type="Tween" parent="."]
 
 [node name="PulseTween" type="Tween" parent="."]
@@ -50,3 +75,5 @@ playback/repeat = true
 [node name="FlashTween" type="Tween" parent="."]
 repeat = true
 playback/repeat = true
+[connection signal="mouse_entered" from="HealthOver" to="." method="_on_HealthOver_mouse_entered"]
+[connection signal="mouse_exited" from="HealthOver" to="." method="_on_HealthOver_mouse_exited"]

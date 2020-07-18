@@ -1,20 +1,10 @@
 extends Area2D
 
+onready var animation_player: = $AnimationPlayer
+onready var timer: = $TimerDisappear
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
-
-
-func _on_Portal2Dout_body_entered(body: Node) -> void:
-	print("enter")
+	PlayerData.time_level = 0 
+	
+func _on_TimerDisappear_timeout() -> void:
+	animation_player.play("disappear")

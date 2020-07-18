@@ -1,10 +1,18 @@
 extends Node
 
+const UNIT_SIZE = 64
+
 var filepath = "res://keybinds.ini"
 var configfile
 
 var keybinds = {}
 
+var gravity: int = 800 setget set_gravity
+
+
+func set_gravity(value: int) -> void:
+	gravity = value
+	
 func _ready() -> void:
 	configfile = ConfigFile.new()
 	if configfile.load(filepath) == OK:
@@ -20,8 +28,6 @@ func _ready() -> void:
 		get_tree().quit()
 		
 	set_game_binds()
-	
-	
 
 func set_game_binds():
 	for key in keybinds.keys():

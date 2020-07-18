@@ -3,7 +3,7 @@ extends Control
 onready var dropdown: = $Menu/Resolution/ResolutionDropdown
 onready var windows: = $Menu/Window/WindowDropdown
 
-var menu_scene = "res://Src/Screens/MainScreen.tscn"
+var menu_scene = "res://src/Screens/MainScreen.tscn"
 var settings
 		
 func _on_ResolutionDropdown_item_selected(index: int) -> void:

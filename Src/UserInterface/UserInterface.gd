@@ -6,6 +6,7 @@ onready var pause_overlay: ColorRect = get_node("PauseOverlay")
 onready var score: Label = get_node("Label")
 onready var pause_title: Label = get_node("PauseOverlay/Title")
 onready var healthbar: Control = $HealthBar
+onready var time_label: Control = $TimeLabel
 
 const DIED_MESSAGE: = "You died"
 
@@ -15,8 +16,12 @@ func _ready() -> void:
 	PlayerData.connect("score_updated", self, "update_interface")
 	PlayerData.connect("player_died", self, "_on_PlayerData_player_died")
 	PlayerData.connect("player_damaged", self, "_damage_take")
+	PlayerData.connect("time_level_change", self, "_time_level_update")
 	update_interface()
 
+func _time_level_update():
+	time_label.text = str(PlayerData.time_level)
+	
 func _damage_take():
 	healthbar._on_health_updated(PlayerData.health, PlayerData.max_health)
 

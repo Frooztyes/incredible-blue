@@ -1,14 +1,15 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://assets/portal/portal4.png" type="Texture" id=1]
-[ext_resource path="res://assets/portal/portal6.png" type="Texture" id=2]
-[ext_resource path="res://assets/portal/portal5.png" type="Texture" id=3]
-[ext_resource path="res://assets/portal/portal7.png" type="Texture" id=4]
-[ext_resource path="res://assets/portal/portal1.png" type="Texture" id=5]
-[ext_resource path="res://assets/portal/portal3.png" type="Texture" id=6]
-[ext_resource path="res://assets/portal/portal2.png" type="Texture" id=7]
+[ext_resource path="res://assets/misc/portal/portal4.png" type="Texture" id=1]
+[ext_resource path="res://assets/misc/portal/portal6.png" type="Texture" id=2]
+[ext_resource path="res://assets/misc/portal/portal5.png" type="Texture" id=3]
+[ext_resource path="res://assets/misc/portal/portal7.png" type="Texture" id=4]
+[ext_resource path="res://assets/misc/portal/portal1.png" type="Texture" id=5]
+[ext_resource path="res://assets/misc/portal/portal3.png" type="Texture" id=6]
+[ext_resource path="res://assets/misc/portal/portal2.png" type="Texture" id=7]
 [ext_resource path="res://Src/Objects/Portal2D.gd" type="Script" id=8]
-[ext_resource path="res://assets/portal/portal.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/misc/portal/portal.wav" type="AudioStream" id=9]
+
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -86,7 +87,7 @@ script = ExtResource( 8 )
 position = Vector2( 0, -53 )
 scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 1 )
-frame = 3
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

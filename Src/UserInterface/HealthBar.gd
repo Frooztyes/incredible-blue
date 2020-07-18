@@ -10,6 +10,7 @@ onready var health_under = $HealthUnder
 onready var update_tween = $UpdateTween
 onready var pulse_tween = $PulseTween
 onready var flash_tween = $FlashTween
+onready var health_display = $HealthOver/HealthDisplay
 
 export (Color) var health_color = Color.green
 export (Color) var caution_color = Color.yellow
@@ -20,6 +21,9 @@ export (float, 0, 1, 0.05) var caution_zone = 0.5
 export (float, 0, 1, 0.05) var danger_zone = 0.2
 export (bool) var will_pulse = false
 
+func _ready() -> void:
+	health_display.text = str(PlayerData.health) + " / " + str(PlayerData.max_health)
+	
 func _on_health_updated(health, amount):
 	health_over.value = health
 	update_tween.interpolate_property(
@@ -34,10 +38,13 @@ func _on_health_updated(health, amount):
 		
 	if health <= 0:
 		PlayerData.deaths += 1
+		
+	health_display.text = str(PlayerData.health) + " / " + str(PlayerData.max_health)
 	
 func _assign_color(health):
 	if health == 0:
-		pulse_tween.set_active(false)		
+		pulse_tween.set_active(false)
+	
 	if health < health_over.max_value * danger_zone:
 		
 		if will_pulse:
@@ -69,3 +76,9 @@ func _on_max_health_updated(max_health):
 	health_over.max_value = max_health
 	health_under.max_value = max_health
 	
+func _on_HealthOver_mouse_entered() -> void:
+	health_display.visible = true
+
+
+func _on_HealthOver_mouse_exited() -> void:
+	health_display.visible = false

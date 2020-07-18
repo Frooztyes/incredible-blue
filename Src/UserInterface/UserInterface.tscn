@@ -36,6 +36,8 @@ __meta__ = {
 }
 
 [node name="HealthBar" parent="." instance=ExtResource( 7 )]
+margin_left = -0.554565
+margin_right = -0.554565
 
 [node name="PauseOverlay" type="ColorRect" parent="."]
 visible = false
@@ -87,3 +89,21 @@ next_scene_path = "res://Src/Screens/MainScreen.tscn"
 margin_top = 140.0
 margin_right = 190.0
 margin_bottom = 208.0
+
+[node name="TimeLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -57.0546
+margin_top = -59.645
+margin_right = 57.9454
+margin_bottom = -39.645
+rect_scale = Vector2( 2, 2 )
+rect_pivot_offset = Vector2( 57, 10 )
+text = "time time time"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

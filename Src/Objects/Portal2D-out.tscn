@@ -1,15 +1,16 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://assets/portal/out/portal-out2.png" type="Texture" id=1]
-[ext_resource path="res://assets/portal/out/portal-out3.png" type="Texture" id=2]
-[ext_resource path="res://assets/portal/out/portal-out4.png" type="Texture" id=3]
-[ext_resource path="res://assets/portal/out/portal-out7.png" type="Texture" id=4]
-[ext_resource path="res://assets/portal/out/portal-out8.png" type="Texture" id=5]
-[ext_resource path="res://assets/portal/out/portal-out5.png" type="Texture" id=6]
-[ext_resource path="res://assets/portal/out/portal-out6.png" type="Texture" id=7]
-[ext_resource path="res://assets/portal/out/portal-out1.png" type="Texture" id=8]
-[ext_resource path="res://assets/portal/portal.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/misc/portal/out/portal-out2.png" type="Texture" id=1]
+[ext_resource path="res://assets/misc/portal/out/portal-out3.png" type="Texture" id=2]
+[ext_resource path="res://assets/misc/portal/out/portal-out4.png" type="Texture" id=3]
+[ext_resource path="res://assets/misc/portal/out/portal-out7.png" type="Texture" id=4]
+[ext_resource path="res://assets/misc/portal/out/portal-out8.png" type="Texture" id=5]
+[ext_resource path="res://assets/misc/portal/out/portal-out5.png" type="Texture" id=6]
+[ext_resource path="res://assets/misc/portal/out/portal-out6.png" type="Texture" id=7]
+[ext_resource path="res://assets/misc/portal/out/portal-out1.png" type="Texture" id=8]
+[ext_resource path="res://assets/misc/portal/portal.wav" type="AudioStream" id=9]
 [ext_resource path="res://Src/Objects/Portal2D-out.gd" type="Script" id=10]
+
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -24,17 +25,57 @@ resource_name = "START"
 length = 0.001
 
 [sub_resource type="Animation" id=3]
-resource_name = "fade_in"
+resource_name = "disappear"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 720.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.5, 1.5 ), Vector2( 0, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="Animation" id=4]
+
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 20.0
 height = 52.0
 
 [node name="Portal2D-out" type="Area2D"]
+z_index = 10
 monitoring = false
 monitorable = false
 collision_layer = 0
-collision_mask = 0
 script = ExtResource( 10 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -47,7 +88,8 @@ playing = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "START"
 anims/START = SubResource( 2 )
-anims/fade_in = SubResource( 3 )
+anims/disappear = SubResource( 3 )
+anims/fade_in = SubResource( 4 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
@@ -56,5 +98,8 @@ max_distance = 300.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -50 )
-shape = SubResource( 4 )
-[connection signal="body_entered" from="." to="." method="_on_Portal2Dout_body_entered"]
+shape = SubResource( 5 )
+
+[node name="TimerDisappear" type="Timer" parent="."]
+autostart = true
+[connection signal="timeout" from="TimerDisappear" to="." method="_on_TimerDisappear_timeout"]
