@@ -1,0 +1,116 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/Tilesets/Castle/PNG/Objects/door1.png" type="Texture" id=1]
+[ext_resource path="res://assets/Tilesets/Castle/PNG/Objects/door4.png" type="Texture" id=2]
+[ext_resource path="res://assets/Tilesets/Castle/PNG/Objects/door2.png" type="Texture" id=3]
+[ext_resource path="res://assets/Tilesets/Castle/PNG/Objects/door3.png" type="Texture" id=4]
+[ext_resource path="res://assets/Tilesets/Castle/PNG/Objects/door5.png" type="Texture" id=5]
+[ext_resource path="res://src/Objects/Door.gd" type="Script" id=6]
+[ext_resource path="res://assets/misc/portal/portal.wav" type="AudioStream" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "door",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 21.3333, 26.6667 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "START"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("TransitionLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TransitionLayer/ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/path = NodePath("TransitionLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TransitionLayer/ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="Door" type="Area2D"]
+modulate = Color( 0.643137, 0.643137, 0.643137, 1 )
+z_index = 10
+z_as_relative = false
+monitorable = false
+collision_layer = 0
+script = ExtResource( 6 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -64 )
+frames = SubResource( 1 )
+animation = "door"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -40 )
+scale = Vector2( 1.5, 1.5 )
+shape = SubResource( 5 )
+
+[node name="TransitionLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="TransitionLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "START"
+anims/START = SubResource( 3 )
+anims/fade_in = SubResource( 4 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+autoplay = true
+max_distance = 300.0
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

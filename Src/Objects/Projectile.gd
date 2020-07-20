@@ -44,8 +44,6 @@ func launch(target_position, power):
 	
 	velocity *= power
 	
-	print(layers)
-	
 func _on_impact(normal: Vector2):
 	stick_wall = not stick_wall
 #	velocity = velocity.bounce(normal)
@@ -54,5 +52,7 @@ func _on_impact(normal: Vector2):
 
 func _on_Hitbox_body_entered(body: Node) -> void:
 	if body.has_method("ennemy_takes_damage"):
-		body.ennemy_takes_damage()
+		body.ennemy_takes_damage(10)
+		queue_free()
+	if body.name == "Blocks":
 		queue_free()

@@ -11,7 +11,6 @@
 [ext_resource path="res://assets/misc/portal/portal.wav" type="AudioStream" id=9]
 [ext_resource path="res://Src/Objects/Portal2D-out.gd" type="Script" id=10]
 
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 5 ) ],
@@ -73,6 +72,7 @@ height = 52.0
 
 [node name="Portal2D-out" type="Area2D"]
 z_index = 10
+z_as_relative = false
 monitoring = false
 monitorable = false
 collision_layer = 0

@@ -46,7 +46,7 @@ func instanciateProjectile():
 	
 	new_projectile.rotation = get_angle_to(player_position) + new_projectile.rotation
 	
-	new_projectile.position = Vector2(global_position.x, global_position.y)
+	new_projectile.position = Vector2(global_position.x, global_position.y-10)
 	
 	get_parent().add_child(new_projectile)
 	
@@ -82,10 +82,6 @@ func _on_ShootTimer_timeout() -> void:
 func be_bounced_upon(bouncer):
 	if bouncer.has_method("bounce"):
 		bouncer.bounce()
-		$BounceArea/CollisionShape2D.disabled = true
-		$CollisionShape2D.disabled = true
-		animation_player.play("stomped")
-		die()
 
 func ennemy_takes_damage():
 	animation_player.play("hit")

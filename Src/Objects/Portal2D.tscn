@@ -10,7 +10,6 @@
 [ext_resource path="res://Src/Objects/Portal2D.gd" type="Script" id=8]
 [ext_resource path="res://assets/misc/portal/portal.wav" type="AudioStream" id=9]
 
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ) ],
@@ -79,6 +78,8 @@ tracks/1/keys = {
 }
 
 [node name="Portal2D" type="Area2D"]
+z_index = 10
+z_as_relative = false
 monitorable = false
 collision_layer = 0
 script = ExtResource( 8 )
@@ -87,7 +88,7 @@ script = ExtResource( 8 )
 position = Vector2( 0, -53 )
 scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 1 )
-frame = 4
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

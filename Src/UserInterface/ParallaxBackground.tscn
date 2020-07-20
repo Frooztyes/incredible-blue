@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/Tilesets/Castle/PNG/Background/Pale/sky.png" type="Texture" id=2]
+[ext_resource path="res://assets/Tilesets/Castle/PNG/Background/Pale/trees.png" type="Texture" id=3]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+scroll_ignore_camera_zoom = true
+
+[node name="Sky" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.5, 0.5 )
+motion_mirroring = Vector2( 960, 0 )
+
+[node name="Sprite" type="Sprite" parent="Sky"]
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Trees" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.5, 0.5 )
+motion_mirroring = Vector2( 960, 0 )
+
+[node name="Sprite" type="Sprite" parent="Trees"]
+texture = ExtResource( 3 )
+centered = false

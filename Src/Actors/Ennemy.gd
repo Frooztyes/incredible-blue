@@ -48,5 +48,3 @@ func die() -> void:
 	
 func get_running_time() -> int:
 	return OS.get_unix_time() - time_start
-
-
