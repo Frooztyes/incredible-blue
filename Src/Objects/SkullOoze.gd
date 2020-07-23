@@ -20,7 +20,6 @@ func launch(direction):
 	anim_player = $AnimationPlayer
 	anim_player.play("rotate_inverse" if direction == -1 else "rotate")
 	velocity.x = direction * movespeed
-	print(raycast)
 	raycast.cast_to *= direction
 	
 

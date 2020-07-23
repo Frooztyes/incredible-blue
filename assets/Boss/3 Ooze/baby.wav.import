@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/baby.wav-8051f3b93efe8366632dacc482268b1e.sample"
+
+[deps]
+
+source_file="res://assets/Boss/3 Ooze/baby.wav"
+dest_files=[ "res://.import/baby.wav-8051f3b93efe8366632dacc482268b1e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

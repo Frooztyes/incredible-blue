@@ -6,11 +6,12 @@ const UP = Vector2(0, -1)
 const SLOPE_STOP = 64
 const BOUNCE_VELOCITY = -(5 * Global.UNIT_SIZE)
 const KNOCKBACK_VELOCITY = Vector2(
-	2 * Global.UNIT_SIZE,
+	20 * Global.UNIT_SIZE,
 	-2 * Global.UNIT_SIZE
 )
 const BASE_MOVESPEED = 5 * Global.UNIT_SIZE
-
+const DROP_THRU_BIT = 3
+const PLAYER_LAYER = 0
 
 onready var timer: Timer = $TimerArrow
 onready var attack_bar: = $AttackBar
@@ -22,6 +23,7 @@ onready var bounce_raycasts = $Scaler/BounceRaycasts
 onready var coyote_timer: Timer = $CoyoteTimer
 onready var jump_buffer: Timer = $JumpBuffer
 onready var slow_timer: Timer = $SlowTimer
+onready var invic_timer: Timer = $InvincibilityTimer
 onready var arrow_position: = $Scaler/ArrowPosition
 onready var scaler: = $Scaler
 
@@ -37,6 +39,7 @@ var can_move: bool = true
 var key_stop: bool = false
 var shoot_finished: bool = false
 var move_direction
+var flip = 1
 
 # move variable
 var velocity = Vector2()
@@ -95,9 +98,10 @@ func _physics_process(delta: float) -> void:
 func _apply_gravity(delta):
 	# remove gravity in case of ladder or when coyote is on
 	if coyote_timer.is_stopped() or is_on_ladder == 0:
-			velocity.y += gravity * delta
-			if is_jumping && velocity.y > 0:
-				is_jumping = false
+		velocity.y += gravity * delta
+		if is_jumping && velocity.y >= 0:
+			is_jumping = false
+				
 	
 func _apply_movement(delta):
 	_check_bounce(delta)
@@ -111,7 +115,7 @@ func _apply_movement(delta):
 		jump_buffer.stop()
 		jump()
 		
-	is_grounded = _check_is_grounded()
+	is_grounded = !is_jumping && _check_is_grounded()
 	
 	if is_grounded:
 		pass
@@ -149,20 +153,18 @@ func jump():
 # handle jump and interrupted jumped
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump"):
-		if is_on_floor() || !coyote_timer.is_stopped():	
-			coyote_timer.stop()
-			jump()
+		if Input.is_action_pressed("down"):
+			set_collision_mask_bit(DROP_THRU_BIT, false)
 		else:
-			jump_buffer.start()
+			if is_on_floor() || !coyote_timer.is_stopped():	
+				coyote_timer.stop()
+				jump()
+			else:
+				jump_buffer.start()
 			
 	if event.is_action_released("jump") and velocity.y < min_jump_velocity:
 		velocity.y = min_jump_velocity
 		
-#	if event.is_action_pressed("move_left"):
-#		scale.x = -1
-#		print(scale)
-#	if event.is_action_pressed("move_right"):
-#		scale.x = 1
 	cheat_code(event)
 		
 # change the velocity from the input pressed. Don't handle jump, but handle vertical flip
@@ -172,8 +174,10 @@ func _handle_movement_input():
 		
 	if move_direction < 0:
 		scaler.scale.x = -1
+		flip = -1
 	elif move_direction > 0:
 		scaler.scale.x = 1
+		flip = 1
 		
 	if is_on_ladder > 0:
 		var move_up: = -int(Input.is_action_pressed("jump")) + int(Input.is_action_pressed("down"))
@@ -213,6 +217,11 @@ func _assign_animation():
 		
 # instantiate arrow to mouse coordinate
 func _instantiate_arrow():
+	var vect_bet: = (get_global_mouse_position() - global_position).normalized() 
+	var ratio = -1 if vect_bet.x < 0 else 1 
+	if ratio != flip:
+		scaler.scale.x *= -1
+		flip *= -1
 	# reset attack_bar
 	attack_bar.visible = false
 	attack_bar.value = 0
@@ -238,7 +247,6 @@ func _instantiate_arrow():
 # if player collides with an ennemy
 func _on_EnnemyDetector_body_entered(body: PhysicsBody2D) -> void:
 	PlayerData.health -= 10
-	apply_knockback(body.global_position)
 	
 # event on death of player
 func die() -> void:
@@ -274,6 +282,8 @@ func bounce(bounce_velocity = BOUNCE_VELOCITY):
 	velocity.y = bounce_velocity
 
 func _damage_take():
+	set_collision_layer_bit(PLAYER_LAYER, false)
+	invic_timer.start()
 	anim_player_damage.play("take_damage")
 	
 func slow(percentage, duration):
@@ -290,14 +300,13 @@ func apply_knockback(projectile_position):
 	
 	velocity += KNOCKBACK_VELOCITY * (-1 if norm_position.x < 0 else 1)
 	
-func apply_boss_knockback(velocity_boss):
-	print(velocity_boss)
-	velocity += velocity_boss
+func apply_jump_knockback(direction):
+	velocity.x = -move_speed * direction
+	velocity.y = min_jump_velocity * 2
 	
 func _on_SwordHit_body_entered(body: Node) -> void:
-	print("touch")
 	if body.has_method("ennemy_takes_damage"):
-		body.ennemy_takes_damage(5)
+		body.ennemy_takes_damage(10)
 
 func cheat_code(ev: InputEvent):
 	if ev is InputEventKey && not ev.pressed:
@@ -311,3 +320,11 @@ func cheat_code(ev: InputEvent):
 		else:
 			sequence_index = 0
 
+
+func _on_Area2D_body_exited(body: Node) -> void:
+	set_collision_mask_bit(DROP_THRU_BIT, true)
+
+
+func _on_InvincibilityTimer_timeout() -> void:
+	set_collision_layer_bit(PLAYER_LAYER, true)
+	invic_timer.stop()
