@@ -59,7 +59,7 @@ var min_jump_height = 0.8 * Global.UNIT_SIZE
 var jump_duration = 0.4
 
 var attack_type = "Bow"
-
+var can_change_anim = true
 # konami code
 var sequence = [
 	KEY_UP,
@@ -137,14 +137,22 @@ func _check_attack():
 		elif Input.is_action_just_released("attack"):
 			attack_pressed = false
 			anim_player.play("shoot")
+			can_change_anim = false
 		elif timer.time_left > 0 and not attack_pressed:
 			anim_player.play("shoot")
+			can_change_anim = false
 		elif attack_pressed:
 			_charge_bar()
 			
 	elif attack_type == "Sword":
 		if Input.is_action_just_pressed("attack"):
+			var vect_bet: = (get_global_mouse_position() - global_position).normalized() 
+			var ratio = -1 if vect_bet.x < 0 else 1 
+			if ratio != flip:
+				scaler.scale.x *= -1
+				flip *= -1
 			anim_player.play("attack")
+			can_change_anim = false
 
 func jump():
 	velocity.y = max_jump_velocity		
@@ -202,19 +210,18 @@ func _check_is_grounded():
 	
 # change animation in each situation (run, jump, idle)
 func _assign_animation():
-				
-#	var anim = "idle"
-#	if !is_grounded && coyote_timer.is_stopped():
-#		anim = "jump"
-#	elif velocity.x != 0:
-#		anim = "run"
+	if can_change_anim:	
+		if not attack_pressed:
+			if move_direction == 0:
+				anim_player.play("idle")
+			else:
+				anim_player.play("run")
+		if attack_pressed && (timer.wait_time-timer.time_left)/timer.wait_time >= 0.75:
+			sprite.play("shoot_max")
 
-	if attack_pressed && (timer.wait_time-timer.time_left)/timer.wait_time >= 0.75:
-#		anim = "shoot"
-		sprite.play("shoot_max")
-#	if sprite.animation != anim:
-#		sprite.play(anim)
-		
+func _can_change_anim():
+	can_change_anim = true
+
 # instantiate arrow to mouse coordinate
 func _instantiate_arrow():
 	var vect_bet: = (get_global_mouse_position() - global_position).normalized() 
@@ -314,7 +321,9 @@ func cheat_code(ev: InputEvent):
 			sequence_index += 1
 			if sequence_index == sequence.size():
 				var new_dobby = dobby.instance()
-				get_parent().add_child(new_dobby)
+				get_parent().scale.y = 0.5 
+				$Camera2D.zoom.x = 0.5
+				MusicController.play_cheat_code_music()
 				new_dobby.global_position = get_global_mouse_position()
 				sequence_index = 0
 		else:

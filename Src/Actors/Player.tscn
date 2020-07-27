@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Src/Actors/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/Player/Archer/Attack/Archer_2.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/Player/Archer/Attack/Archer_3.png" type="Texture" id=5]
 [ext_resource path="res://assets/Player/Archer/Attack/Archer_1.png" type="Texture" id=6]
 [ext_resource path="res://assets/light.png" type="Texture" id=7]
+[ext_resource path="res://assets/Player/Archer/Archer (1).png" type="Texture" id=8]
 [ext_resource path="res://assets/misc/healthbar/healthbar-over.png" type="Texture" id=19]
 [ext_resource path="res://assets/misc/healthbar/healthbar-back.png" type="Texture" id=20]
 [ext_resource path="res://assets/misc/healthbar/healthbar-progress.png" type="Texture" id=21]
@@ -79,8 +80,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "attack"
-length = 0.35
-step = 0.01
+length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Scaler/AnimatedSprite/SwordHit/CollisionShape2D2:disabled")
 tracks/0/interp = 1
@@ -88,13 +88,91 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.35 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ true, false, true ]
+"values": [ true, false, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Scaler/AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "melee", "idle" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Scaler/AnimatedSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.109048, 0.201942, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 0 ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_can_change_anim"
+} ]
 }
 
 [sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Scaler/AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "idle" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Scaler/AnimatedSprite:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Scaler/AnimatedSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Scaler/AnimatedSprite:rotation_degrees")
 tracks/0/interp = 1
@@ -134,8 +212,47 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "shoot"
+[sub_resource type="Animation" id=6]
+resource_name = "run"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Scaler/AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "run" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Scaler/AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Scaler/AnimatedSprite:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Scaler/AnimatedSprite:frame")
 tracks/0/interp = 1
@@ -146,7 +263,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0.1, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2 ]
+"values": [ 0, 1, 0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Scaler/AnimatedSprite:animation")
@@ -179,15 +296,18 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.2 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "_instantiate_arrow"
+}, {
+"args": [  ],
+"method": "_can_change_anim"
 } ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:material:shader_param/flash_modifier")
@@ -202,7 +322,7 @@ tracks/0/keys = {
 "values": [ 1.0, 0.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:material:shader_param/flash_modifier")
@@ -217,19 +337,71 @@ tracks/0/keys = {
 "values": [ 1.0, 0.0, 1.0, 0.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 16, 30 )
 
-[sub_resource type="SpriteFrames" id=9]
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 8 )
+region = Rect2( 64, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 8 )
+region = Rect2( 128, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 8 )
+region = Rect2( 192, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 8 )
+region = Rect2( 256, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 8 )
+region = Rect2( 192, 64, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 8 )
+region = Rect2( 256, 64, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 128, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 8 )
+region = Rect2( 64, 128, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 8 )
+region = Rect2( 128, 128, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 8 )
+region = Rect2( 192, 128, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 8 )
+region = Rect2( 256, 128, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 8 )
+region = Rect2( 64, 192, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=24]
 animations = [ {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
 "loop": true,
-"name": "jump",
+"name": "melee",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ) ],
@@ -237,7 +409,12 @@ animations = [ {
 "name": "shoot",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "shoot_charge",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
 "loop": true,
 "name": "run",
 "speed": 5.0
@@ -247,19 +424,19 @@ animations = [ {
 "name": "shoot_max",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ) ],
 "loop": true,
-"name": "shoot_charge",
+"name": "jump",
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=25]
 extents = Vector2( 16, 8 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=26]
 extents = Vector2( 14, 4 )
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=27]
 extents = Vector2( 14, 30 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -287,12 +464,14 @@ editor_draw_drag_margin = true
 anims/TakeDoor = SubResource( 1 )
 anims/appear_portal = SubResource( 2 )
 anims/attack = SubResource( 3 )
-anims/in_portal = SubResource( 4 )
-anims/shoot = SubResource( 5 )
-anims/take_damage = SubResource( 6 )
+anims/idle = SubResource( 4 )
+anims/in_portal = SubResource( 5 )
+anims/run = SubResource( 6 )
+anims/shoot = SubResource( 7 )
+anims/take_damage = SubResource( 8 )
 
 [node name="TakeDamageAnim" type="AnimationPlayer" parent="."]
-anims/take_damage = SubResource( 7 )
+anims/take_damage = SubResource( 9 )
 
 [node name="TimerArrow" type="Timer" parent="."]
 
@@ -389,13 +568,13 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scaler/EnnemyDetector"]
 position = Vector2( 0, 1.974 )
-shape = SubResource( 8 )
+shape = SubResource( 10 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Scaler"]
 use_parent_material = true
 position = Vector2( 12, 0 )
-rotation = -3.49691e-07
-frames = SubResource( 9 )
+rotation = -12.5664
+frames = SubResource( 24 )
 animation = "idle"
 
 [node name="SwordHit" type="Area2D" parent="Scaler/AnimatedSprite"]
@@ -406,7 +585,7 @@ collision_mask = 2050
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Scaler/AnimatedSprite/SwordHit"]
 position = Vector2( 32, 0.000926971 )
-shape = SubResource( 10 )
+shape = SubResource( 25 )
 disabled = true
 
 [node name="ArrowPosition" type="Node2D" parent="Scaler"]
@@ -418,13 +597,13 @@ collision_mask = 2147483656
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scaler/Area2D"]
 position = Vector2( 0, 27.974 )
-shape = SubResource( 11 )
+shape = SubResource( 26 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 0.498039, 0.992157, 0, 1 )
 light_mask = -2147483647
 position = Vector2( 0, 1.974 )
-shape = SubResource( 12 )
+shape = SubResource( 27 )
 [connection signal="timeout" from="TimerArrow" to="." method="_on_TimerArrow_timeout"]
 [connection signal="timeout" from="SlowTimer" to="." method="_on_SlowTimer_timeout"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_InvincibilityTimer_timeout"]

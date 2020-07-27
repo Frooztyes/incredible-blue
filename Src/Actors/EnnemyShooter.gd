@@ -83,7 +83,7 @@ func be_bounced_upon(bouncer):
 	if bouncer.has_method("bounce"):
 		bouncer.bounce()
 
-func ennemy_takes_damage():
+func ennemy_takes_damage(damage):
 	animation_player.play("hit")
 	$BounceArea/CollisionShape2D.disabled = true
 	$CollisionShape2D.disabled = true

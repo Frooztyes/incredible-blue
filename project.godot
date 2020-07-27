@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Actor",
 "language": "GDScript",
-"path": "res://src/Actors/Actor.gd"
+"path": "res://Src/Actors/Actor.gd"
 }, {
 "base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://src/StateMachine/StateMachine.gd"
+"path": "res://Src/StateMachine/StateMachine.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",

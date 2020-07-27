@@ -29,6 +29,7 @@ var summon_done = false
 var summon_done_second = false
 var dead = false
 var baby_created = []
+var buffer_animation = null
 
 enum BossMode {
 	WALK,
@@ -164,6 +165,10 @@ func _disable_platforms():
 		ladder.get_node("CollisionShape2D").disabled = true
 	
 func _walk():
+	if buffer_animation != null:
+		mode = buffer_animation
+		buffer_animation = null
+		
 	if next_mode_timer.is_stopped():
 		next_mode_timer.start()
 		move_speed = BASE_MOVESPEED
@@ -224,10 +229,16 @@ func run_timer_end() -> void:
 func _NextModeTimer_timeout() -> void:	
 	if not dead:
 		if health < 50 and not summon_done:
-			mode = BossMode.ATTACK_2
+			if mode == BossMode.WALK:
+				mode = BossMode.ATTACK_2
+			else:
+				buffer_animation = BossMode.ATTACK_2
 			summon_done = true
 		elif health < 25 and not summon_done_second:
-			mode = BossMode.ATTACK_2
+			if mode == BossMode.WALK:
+				mode = BossMode.ATTACK_2
+			else:
+				buffer_animation = BossMode.ATTACK_2
 			summon_done_second = true
 		else:
 			mode = range_mode[randi() % range_mode.size()]
